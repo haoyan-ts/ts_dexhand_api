@@ -1,0 +1,199 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+import "ts/dexhand/v1/piper.proto";
+
+option csharp_namespace = "DexHandControlGrpc";
+
+// The dexhand control service definition.
+service DexHandControlService {
+  rpc SetArmPose(SetArmPoseRequest) returns (SetArmPoseResponse) {}
+  rpc SetArmPoseStream(stream SetArmPoseStreamRequest) returns (SetArmPoseStreamResponse) {}
+
+  rpc SetArmJoint(SetArmJointRequest) returns (SetArmJointResponse) {}
+  rpc SetArmJointStream(stream SetArmJointStreamRequest) returns (SetArmJointStreamResponse) {}
+
+  rpc SetHandPose(SetHandPoseRequest) returns (SetHandPoseResponse) {}
+  rpc SetHandPoseStream(stream SetHandPoseStreamRequest) returns (SetHandPoseStreamResponse) {}
+
+  rpc GetArmStatus(GetArmStatusRequest) returns (GetArmStatusResponse) {}
+  rpc GetArmStatusStream(GetArmStatusStreamRequest) returns (stream GetArmStatusStreamResponse) {}
+
+  rpc GetArmJointStatus(GetArmJointStatusRequest) returns (GetArmJointStatusResponse) {}
+  rpc GetArmJointStatusStream(GetArmJointStatusStreamRequest) returns (stream GetArmJointStatusStreamResponse) {}
+
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Calibrate(CalibrateRequest) returns (CalibrateResponse) {}
+  rpc Enable(EnableRequest) returns (EnableResponse) {}
+  rpc Disable(DisableRequest) returns (DisableResponse) {}
+}
+
+enum Side {
+  SIDE_UNSPECIFIED = 0;
+  SIDE_LEFT = 1;
+  SIDE_RIGHT = 2;
+}
+
+enum ArmType {
+  ARM_TYPE_UNSPECIFIED = 0;
+  ARM_TYPE_PIPER = 1;
+  ARM_TYPE_NOVA = 2;
+}
+
+enum HandType {
+  HAND_TYPE_UNSPECIFIED = 0;
+  HAND_TYPE_INSPIRE = 1;
+  HAND_TYPE_DH = 2;
+}
+
+message SetArmPoseRequest {
+  string command = 1;
+  string uuid = 2;
+  repeated double poses = 4;
+}
+
+message SetArmPoseResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message SetArmPoseStreamRequest {
+  string command = 1;
+  string uuid = 2;
+  int32 seq_num = 3;
+  repeated double poses = 4;
+}
+
+message SetArmPoseStreamResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message SetArmJointStreamRequest {
+  string command = 1;
+  string uuid = 2;
+  int32 seq_num = 3;
+  repeated double angles = 4;
+}
+
+message SetArmJointStreamResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message SetArmJointRequest {
+  string command = 1;
+  string uuid = 2;
+  repeated double angles = 3;
+}
+
+message SetArmJointResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetArmStatusRequest {
+  string command = 1;
+  string uuid = 2;
+}
+
+message GetArmStatusStreamRequest {
+  string command = 1;
+  string uuid = 2;
+}
+
+message GetArmJointStatusRequest {
+  string command = 1;
+  string uuid = 2;
+}
+
+message GetArmJointStatusStreamRequest {
+  string command = 1;
+  string uuid = 2;
+}
+
+message SetHandPoseStreamRequest {
+  string command = 1;
+  string uuid = 2;
+  int32 seq_num = 3;
+  repeated double poses = 4;
+}
+
+message SetHandPoseStreamResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message CalibrateRequest {
+  string command = 1;
+  string uuid = 2;
+}
+
+message EnableRequest {
+  string command = 1;
+  string uuid = 2;
+}
+
+message DisableRequest {
+  string command = 1;
+  string uuid = 2;
+}
+
+message GetArmStatusResponse {
+  string success = 1;
+  PiperArmStatus details = 2;
+}
+
+message GetArmStatusStreamResponse {
+  string success = 1;
+  PiperArmStatus details = 2;
+}
+
+message GetArmJointStatusResponse {
+  string success = 1;
+  string details = 2;
+}
+
+message GetArmJointStatusStreamResponse {
+  string success = 1;
+  string details = 2;
+}
+
+message CalibrateResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message EnableResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message DisableResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message SetHandPoseRequest {
+  string command = 1;
+  string uuid = 2;
+  repeated double poses = 4;
+}
+
+message SetHandPoseResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message CreateRequest {
+  string command = 1;
+  Side side = 2;
+  ArmType arm = 3;
+  HandType hand = 4;
+}
+
+message CreateResponse {
+  bool success = 1;
+  string message = 2;
+}

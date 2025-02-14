@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+option csharp_namespace = "DexHandControlGrpc";
+
+// The request message containing the user's name.
+enum CtrlMode {
+  CTRL_MODE_UNSPECIFIED = 0;
+  CTRL_MODE_IDLE = 1;
+  CTRL_MODE_CAN = 2;
+  CTRL_MODE_TEACH = 3;
+  CTRL_MODE_ETH = 4;
+}
+
+enum ArmStatus {
+  ARM_STATUS_UNSPECIFIED = 0;
+  ARM_STATUS_IDLE = 1;
+  ARM_STATUS_BUSY = 2;
+  ARM_STATUS_ERROR = 3;
+}
+
+enum ModeFeed {
+  MODE_FEED_UNSPECIFIED = 0;
+  MODE_FEED_IDLE = 1;
+  MODE_FEED_BUSY = 2;
+  MODE_FEED_ERROR = 3;
+}
+
+enum TeachStatus {
+  TEACH_STATUS_UNSPECIFIED = 0;
+  TEACH_STATUS_IDLE = 1;
+  TEACH_STATUS_BUSY = 2;
+  TEACH_STATUS_ERROR = 3;
+}
+
+enum MotionStatus {
+  MOTION_STATUS_UNSPECIFIED = 0;
+  MOTION_STATUS_IDLE = 1;
+  MOTION_STATUS_BUSY = 2;
+  MOTION_STATUS_ERROR = 3;
+}
+
+message PiperArmStatus {
+  CtrlMode ctrl_mode = 1;
+  ArmStatus arm_status = 2;
+  ModeFeed mode_feed = 3;
+  TeachStatus teach_status = 4;
+  MotionStatus motion_status = 5;
+  int32 trajectory_num = 6;
+  int32 error_code = 7;
+}
