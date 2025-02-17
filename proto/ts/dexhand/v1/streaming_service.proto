@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+import "ts/dexhand/v1/piper.proto";
+
+option csharp_namespace = "DexHandControlGrpc";
+
+service StreamingService {
+  rpc SendArmPose(stream SendArmPoseRequest) returns (stream SendArmPoseResponse) {}
+  // rpc SendArmJoint(stream SendArmJointRequest) returns (stream SendArmJointResponse) {}
+
+  // rpc ReceiveArmStatus(stream ReceiveArmStatusRequest) returns (stream ReceiveArmStatusResponse) {}
+  // rpc ReceiveArmJointStatus(stream ReceiveArmJointStatusRequest) returns (stream ReceiveArmJointStatusResponse) {}
+
+  // rpc SendHandPose(stream SendHandPoseRequest) returns (stream SendHandPoseResponse) {}
+
+  // rpc ReceiveHandStatus(stream ReceiveHandStatusRequest) returns (stream ReceiveHandStatusResponse) {}
+}
+
+message SendArmPoseRequest {
+  oneof request {
+    SetupRequest setup_request = 1;
+    ArmPose arm_pose = 2;
+  }
+}
+
+message SetupRequest {
+  string dexhand_id = 1;
+}
+
+message SendArmPoseResponse {
+  oneof response {
+    SetupResponse setup_response = 1;
+    ExceptionResponse exception_response = 2;
+    ExitResponse exit_response = 3;
+  }
+}
+
+message SetupResponse {
+  bool ready = 1;
+  string stream_id = 2;
+}
+message ExceptionResponse {
+  string message = 1;
+}
+message ExitResponse {
+  bool exit = 1;
+}
+
+message ArmPose {
+  ArmHeader header = 1;
+
+  repeated double poses = 3;
+}
+
+message ArmJoint {
+  ArmHeader header = 1;
+
+  repeated double joints = 3;
+}
+
+message ArmHeader {
+  string dexhand_id = 1;
+  string stream_id = 2;
+  uint32 count = 3;
+}

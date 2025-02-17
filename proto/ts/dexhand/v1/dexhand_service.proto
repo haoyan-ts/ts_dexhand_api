@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "ts/dexhand/v1/piper.proto";
+import "ts/dexhand/v1/services.proto";
+
+option csharp_namespace = "DexHandControlGrpc";
+
+service DexHandService {
+  // Define your RPC methods here
+  rpc ListDexHands(ListDexHandsRequest) returns (ListDexHandsResponse) {}
+  rpc CreateDexHand(CreateDexHandRequest) returns (DexHand) {}
+  rpc GetDexHand(GetDexHandRequest) returns (DexHand) {}
+  rpc UpdateDexHand(UpdateDexHandRequest) returns (DexHand) {}
+  rpc DeleteDexHand(DeleteDexHandRequest) returns (google.protobuf.Empty) {}
+}
+
+message ListDexHandsRequest {}
+
+message ListDexHandsResponse {
+  repeated DexHand dex_hands = 1;
+}
+
+message CreateDexHandRequest {
+  DexHandConfig config = 1;
+}
+
+message GetDexHandRequest {
+  oneof request {
+    string name = 2;
+    string id = 3;
+  }
+}
+
+message UpdateDexHandRequest {
+  DexHand dex_hand = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+message DeleteDexHandRequest {
+  DexHand dex_hand = 1;
+}
+
+message DexHandConfig {
+  string name = 1;
+
+  Side side = 3;
+  ArmType arm_type = 4;
+  HandType hand_type = 5;
+}
+
+message DexHand {
+  string name = 1;
+  string id = 2;
+  Side side = 3;
+  ArmType arm_type = 4;
+  HandType hand_type = 5;
+}

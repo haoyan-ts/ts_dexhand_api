@@ -9,16 +9,16 @@ option csharp_namespace = "DexHandControlGrpc";
 // The dexhand control service definition.
 service DexHandControlService {
   rpc SetArmPose(SetArmPoseRequest) returns (SetArmPoseResponse) {}
-  rpc SetArmPoseStream(stream SetArmPoseStreamRequest) returns (SetArmPoseStreamResponse) {}
+  rpc SetArmPoseStream(stream SetArmPoseStreamRequest) returns (stream SetArmPoseStreamResponse) {}
 
   rpc SetArmJoint(SetArmJointRequest) returns (SetArmJointResponse) {}
-  rpc SetArmJointStream(stream SetArmJointStreamRequest) returns (SetArmJointStreamResponse) {}
+  rpc SetArmJointStream(stream SetArmJointStreamRequest) returns (stream SetArmJointStreamResponse) {}
 
   rpc SetHandPose(SetHandPoseRequest) returns (SetHandPoseResponse) {}
-  rpc SetHandPoseStream(stream SetHandPoseStreamRequest) returns (SetHandPoseStreamResponse) {}
+  rpc SetHandPoseStream(stream SetHandPoseStreamRequest) returns (stream SetHandPoseStreamResponse) {}
 
   rpc GetArmStatus(GetArmStatusRequest) returns (GetArmStatusResponse) {}
-  rpc GetArmStatusStream(GetArmStatusStreamRequest) returns (stream GetArmStatusStreamResponse) {}
+  rpc GetArmStatusStream(stream GetArmStatusStreamRequest) returns (stream GetArmStatusStreamResponse) {}
 
   rpc GetArmJointStatus(GetArmJointStatusRequest) returns (GetArmJointStatusResponse) {}
   rpc GetArmJointStatusStream(GetArmJointStatusStreamRequest) returns (stream GetArmJointStatusStreamResponse) {}

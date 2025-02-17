@@ -11,7 +11,7 @@ modules:
         - FILE
 lint:
   use:
-    - STANDARD
+    - minimal
 breaking:
   use:
     - PACKAGE
