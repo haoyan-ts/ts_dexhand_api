@@ -9,6 +9,8 @@ modules:
     breaking:
       use:
         - FILE
+deps:
+  - buf.build/googleapis/googleapis:f0e53af8f2fc4556b94f482688b57223
 lint:
   use:
     - minimal

@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+import "google/longrunning/operations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/field_mask.proto";
+import "ts/dexhand/v1/piper.proto";
+import "ts/dexhand/v1/common.proto";
+
+option csharp_namespace = "DexHandControlGrpc";
+
+service SessionService {
+  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse) {}
+  rpc CreateSession(CreateSessionRequest) returns (Session) {}
+  rpc GetSession(GetSessionRequest) returns (Session) {}
+  rpc UpdateSession(UpdateSessionRequest) returns (Session) {}
+  rpc DeleteSession(DeleteSessionRequest) returns (google.protobuf.Empty) {}
+
+  // Custom RPC method
+  rpc CalibrateWorld(CalibrateWorldRequest) returns (google.longrunning.Operation) {}
+}
+
+message ListSessionsRequest {}
+
+message ListSessionsResponse {
+  repeated Session sessions = 1;
+}
+
+message CreateSessionRequest {
+  SessionConfig config = 1;
+}
+
+message GetSessionRequest {
+  oneof request {
+    string name = 2;
+    string id = 3;
+  }
+}
+
+message UpdateSessionRequest {
+  Session session = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+message DeleteSessionRequest {
+  Session session = 1;
+}
+
+message CalibrateWorldRequest {
+  string session_id = 1;
+  WorldDataHeader header = 2;
+
+  map<string, Vector3> data = 3;
+}
+
+message WorldDataHeader {
+  uint32 data_length = 1;
+}
+
+message SessionConfig {}
+
+message Session {
+  string name = 1;
+  string id = 2;
+
+  google.protobuf.Any details = 3;
+}
+
+enum SessionState {
+  SESSION_STATE_UNSPECIFIED = 0;
+  SESSION_STATE_START = 1;
+  SESSION_STATE_CONFIG = 2;
+  SESSION_STATE_PERFORM = 3;
+  SESSION_STATE_END = 4;
+}

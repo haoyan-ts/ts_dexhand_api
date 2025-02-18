@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+
+option csharp_namespace = "DexHandControlGrpc";
+
+service DexHandControlService {
+  rpc EnableDexHand(EnableDexHandRequest) returns (google.protobuf.Empty) {}
+  rpc DisableDexHand(DisableDexHandRequest) returns (google.protobuf.Empty) {}
+
+  rpc SendPose(stream SendPoseRequest) returns (stream google.protobuf.Empty) {}
+  rpc SendJoint(stream SendJointRequest) returns (stream google.protobuf.Empty) {}
+
+  rpc ReceiveStatus(stream ReceiveStatusRequest) returns (stream ReceiveStatusResponse) {}
+}
+
+message EnableDexHandRequest {
+  string name = 1;
+  string id = 2;
+}
+
+message DisableDexHandRequest {
+  string name = 1;
+  string id = 2;
+}
+
+message PacketHeader {
+  string dexhand_id = 1;
+  string type = 2;
+  string length = 3;
+}
+
+message Packet {
+  PacketHeader header = 1;
+
+  repeated double poses = 3;
+}
+
+message SetupRequest {}
+message CancelRequest {}
+
+message SendPoseRequest {
+  string id = 1;
+
+  oneof request {
+    SetupRequest setup_request = 2;
+    Packet packet_request = 5;
+  }
+}
+
+message SendJointRequest {
+  string id = 1;
+
+  oneof request {
+    SetupRequest setup_request = 2;
+    Packet data_request = 5;
+  }
+}
+
+message ReceiveStatusRequest {
+  string id = 1;
+
+  oneof request {
+    SetupRequest setup_request = 3;
+    CancelRequest cancel_request = 4;
+  }
+}
+
+message ReceiveStatusResponse {
+  string id = 1;
+
+  oneof response {
+    Status status = 2;
+    Exception exception = 3;
+    Exit exit = 4;
+  }
+}
+
+message Status {
+  string id = 1;
+  string name = 2;
+
+  map<string, google.protobuf.Any> data = 3;
+}
+
+message Exception {
+  string message = 3;
+}
+
+message Exit {}

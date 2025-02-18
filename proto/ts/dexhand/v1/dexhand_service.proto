@@ -5,7 +5,7 @@ package ts.dexhand.v1;
 import "google/protobuf/empty.proto";
 import "google/protobuf/field_mask.proto";
 import "ts/dexhand/v1/piper.proto";
-import "ts/dexhand/v1/services.proto";
+import "ts/dexhand/v1/common.proto";
 
 option csharp_namespace = "DexHandControlGrpc";
 
@@ -16,6 +16,65 @@ service DexHandService {
   rpc GetDexHand(GetDexHandRequest) returns (DexHand) {}
   rpc UpdateDexHand(UpdateDexHandRequest) returns (DexHand) {}
   rpc DeleteDexHand(DeleteDexHandRequest) returns (google.protobuf.Empty) {}
+
+  rpc CreateMap(CreateMapRequest) returns (Map) {}
+  rpc GetMap(GetMapRequest) returns (Map) {}
+  rpc UpdateMap(UpdateMapRequest) returns (Map) {}
+  rpc DeleteMap(DeleteMapRequest) returns (google.protobuf.Empty) {}
+}
+
+message CreateMapRequest {
+  MapConfig config = 1;
+}
+
+message GetMapRequest {
+  oneof request {
+    string name = 2;
+    string id = 3;
+  }
+}
+
+message UpdateMapRequest {
+  Map map = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+message DeleteMapRequest {
+  Map map = 1;
+}
+
+message MapConfig {}
+
+message Map {
+  MapHeader header = 1;
+}
+
+message MapHeader {
+  string name = 1;
+  string id = 2;
+  bool is_unset = 3;
+  repeated uint32 unset_vertex_idxs = 4;
+}
+
+message Vertex3 {
+  string name = 1;
+  string id = 2;
+
+  Vector3 position = 3;
+}
+
+message Simplex3 {
+  string name = 1;
+  string id = 2;
+
+  repeated Vertex3 vertices = 3;
+}
+
+message Complex3 {
+  string name = 1;
+  string id = 2;
+
+  repeated Simplex3 simplices = 3;
 }
 
 message ListDexHandsRequest {}

@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+option csharp_namespace = "DexHandControlGrpc";
+
+message Vector3 {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+message Quaternion {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+  float w = 4;
+}
+
+enum Side {
+  SIDE_UNSPECIFIED = 0;
+  SIDE_LEFT = 1;
+  SIDE_RIGHT = 2;
+}
+
+enum ArmType {
+  ARM_TYPE_UNSPECIFIED = 0;
+  ARM_TYPE_PIPER = 1;
+  ARM_TYPE_NOVA = 2;
+}
+
+enum HandType {
+  HAND_TYPE_UNSPECIFIED = 0;
+  HAND_TYPE_INSPIRE = 1;
+  HAND_TYPE_DH = 2;
+}
+
