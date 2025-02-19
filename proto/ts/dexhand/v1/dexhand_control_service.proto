@@ -41,8 +41,8 @@ message DisconnectDexHandRequest {
 
 message PacketHeader {
   string dexhand_id = 1;
-  string type = 2;
-  string length = 3;
+  PacketType type = 2;
+  uint32 length = 3;
 }
 
 message Packet {
@@ -51,12 +51,14 @@ message Packet {
   repeated double poses = 3;
 }
 
-message SetupRequest {}
+message SetupRequest {
+  string dexhand_id = 1;
+  PacketType type = 2;
+  uint32 length = 3;
+}
 message CancelRequest {}
 
 message SendPoseRequest {
-  string id = 1;
-
   oneof request {
     SetupRequest setup_request = 2;
     Packet packet_request = 5;
@@ -64,17 +66,13 @@ message SendPoseRequest {
 }
 
 message SendJointRequest {
-  string id = 1;
-
   oneof request {
     SetupRequest setup_request = 2;
-    Packet data_request = 5;
+    Packet packet_request = 5;
   }
 }
 
 message ReceiveStatusRequest {
-  string id = 1;
-
   oneof request {
     SetupRequest setup_request = 3;
     CancelRequest cancel_request = 4;
@@ -82,8 +80,6 @@ message ReceiveStatusRequest {
 }
 
 message ReceiveStatusResponse {
-  string id = 1;
-
   oneof response {
     Status status = 2;
     Exception exception = 3;
@@ -103,3 +99,9 @@ message Exception {
 }
 
 message Exit {}
+
+enum PacketType {
+  PACKET_TYPE_UNSPECIFIED = 0;
+  PACKET_TYPE_POSE = 1;
+  PACKET_TYPE_JOINT = 2;
+}
