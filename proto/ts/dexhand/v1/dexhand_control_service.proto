@@ -11,6 +11,7 @@ service DexHandControlService {
   rpc EnableDexHand(EnableDexHandRequest) returns (google.protobuf.Empty) {}
   rpc DisableDexHand(DisableDexHandRequest) returns (google.protobuf.Empty) {}
   rpc ConnectDexHand(ConnectDexHandRequest) returns (google.protobuf.Empty) {}
+  rpc DisconnectDexHand(DisconnectDexHandRequest) returns (google.protobuf.Empty) {}
 
   rpc SendPose(stream SendPoseRequest) returns (stream google.protobuf.Empty) {}
   rpc SendJoint(stream SendJointRequest) returns (stream google.protobuf.Empty) {}
@@ -24,6 +25,16 @@ message EnableDexHandRequest {
 }
 
 message DisableDexHandRequest {
+  string name = 1;
+  string id = 2;
+}
+
+message ConnectDexHandRequest {
+  string name = 1;
+  string id = 2;
+}
+
+message DisconnectDexHandRequest {
   string name = 1;
   string id = 2;
 }
