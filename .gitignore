@@ -1,2 +1,3 @@
-gen
+gen/
 buf.lock
+build/

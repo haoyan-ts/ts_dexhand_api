@@ -10,6 +10,7 @@ option csharp_namespace = "DexHandControlGrpc";
 service DexHandControlService {
   rpc EnableDexHand(EnableDexHandRequest) returns (google.protobuf.Empty) {}
   rpc DisableDexHand(DisableDexHandRequest) returns (google.protobuf.Empty) {}
+  rpc ConnectDexHand(ConnectDexHandRequest) returns (google.protobuf.Empty) {}
 
   rpc SendPose(stream SendPoseRequest) returns (stream google.protobuf.Empty) {}
   rpc SendJoint(stream SendJointRequest) returns (stream google.protobuf.Empty) {}
