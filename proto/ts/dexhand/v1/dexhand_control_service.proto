@@ -56,12 +56,15 @@ message SetupRequest {
   PacketType type = 2;
   uint32 length = 3;
 }
-message CancelRequest {}
+message CancelRequest {
+  string dexhand_id = 1;
+}
 
 message SendPoseRequest {
   oneof request {
     SetupRequest setup_request = 2;
     Packet packet_request = 5;
+    CancelRequest cancel_request = 6;
   }
 }
 
@@ -69,6 +72,7 @@ message SendJointRequest {
   oneof request {
     SetupRequest setup_request = 2;
     Packet packet_request = 5;
+    CancelRequest cancel_request = 6;
   }
 }
 
