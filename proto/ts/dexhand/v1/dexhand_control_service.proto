@@ -98,6 +98,7 @@ message Status {
   string name = 2;
 
   google.protobuf.Any data = 3;
+  repeated double angles = 4;
 }
 
 message Exception {
