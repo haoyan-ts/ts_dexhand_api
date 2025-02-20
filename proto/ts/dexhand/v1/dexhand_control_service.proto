@@ -14,11 +14,17 @@ service DexHandControlService {
   rpc DisconnectDexHand(DisconnectDexHandRequest) returns (google.protobuf.Empty) {}
 
   rpc SetupModel(SetupModelRequest) returns (google.protobuf.Empty) {}
+  rpc ChangeControlMode(ChangeControlModeRequest) returns (google.protobuf.Empty) {}
 
   rpc SendPose(stream SendPoseRequest) returns (stream google.protobuf.Empty) {}
   rpc SendJoint(stream SendJointRequest) returns (stream google.protobuf.Empty) {}
 
   rpc ReceiveStatus(stream ReceiveStatusRequest) returns (stream ReceiveStatusResponse) {}
+}
+
+message ChangeControlModeRequest {
+  string dexhand_id = 1;
+  uint32 control_mode = 2;
 }
 
 message EnableDexHandRequest {
