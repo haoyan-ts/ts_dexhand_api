@@ -13,6 +13,8 @@ service DexHandControlService {
   rpc ConnectDexHand(ConnectDexHandRequest) returns (google.protobuf.Empty) {}
   rpc DisconnectDexHand(DisconnectDexHandRequest) returns (google.protobuf.Empty) {}
 
+  rpc SetupModel(SetupModelRequest) returns (google.protobuf.Empty) {}
+
   rpc SendPose(stream SendPoseRequest) returns (stream google.protobuf.Empty) {}
   rpc SendJoint(stream SendJointRequest) returns (stream google.protobuf.Empty) {}
 
@@ -108,4 +110,28 @@ enum PacketType {
   PACKET_TYPE_UNSPECIFIED = 0;
   PACKET_TYPE_POSE = 1;
   PACKET_TYPE_JOINT = 2;
+}
+
+message SetupModelRequest {
+  string dexhand_id = 1;
+  ModelType model_type = 2;
+  oneof model {
+    google.protobuf.Any ik_model = 3;
+    LerpModel lerp_model = 4;
+  }
+}
+
+message LerpModel {
+  message AngleData {
+    repeated double angles = 1;
+  }
+
+  uint32 num_data = 1;
+  repeated AngleData data = 2;
+}
+
+enum ModelType {
+  MODEL_TYPE_UNSPECIFIED = 0;
+  MODEL_TYPE_IK = 1;
+  MODEL_TYPE_LERP = 2;
 }

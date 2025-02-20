@@ -4,49 +4,89 @@ package ts.dexhand.v1;
 
 option csharp_namespace = "DexHandControlGrpc";
 
-// The request message containing the user's name.
-enum CtrlMode {
-  CTRL_MODE_UNSPECIFIED = 0;
-  CTRL_MODE_IDLE = 1;
-  CTRL_MODE_CAN = 2;
-  CTRL_MODE_TEACH = 3;
-  CTRL_MODE_ETH = 4;
+// Modified enums following BUF standard configuration
+enum ControlMode {
+  CONTROL_MODE_UNSPECIFIED = 0;
+  CONTROL_MODE_STANDBY = 1;            // formerly STANDBY (0)
+  CONTROL_MODE_CAN_INSTRUCTION = 2;    // formerly CAN_INSTRUCTION (1)
+  CONTROL_MODE_TEACHING = 3;           // formerly TEACHING (2)
+  CONTROL_MODE_ETHERNET = 4;           // formerly ETHERNET (3)
+  CONTROL_MODE_WIFI = 5;               // formerly WIFI (4)
+  CONTROL_MODE_REMOTE = 6;             // formerly REMOTE (5)
+  CONTROL_MODE_LINKAGE_TEACHING = 7;   // formerly LINKAGE_TEACHING (6)
+  CONTROL_MODE_OFFLINE_TRAJECTORY = 8; // formerly OFFLINE_TRAJECTORY (7)
 }
 
 enum ArmStatus {
   ARM_STATUS_UNSPECIFIED = 0;
-  ARM_STATUS_IDLE = 1;
-  ARM_STATUS_BUSY = 2;
-  ARM_STATUS_ERROR = 3;
+  ARM_STATUS_NORMAL = 1;                        // formerly NORMAL (0)
+  ARM_STATUS_EMERGENCY_STOP = 2;                // formerly EMERGENCY_STOP (1)
+  ARM_STATUS_NO_SOLUTION = 3;                   // formerly NO_SOLUTION (2)
+  ARM_STATUS_SINGULARITY = 4;                   // formerly SINGULARITY (3)
+  ARM_STATUS_TARGET_ANGLE_EXCEEDS_LIMIT = 5;    // formerly TARGET_ANGLE_EXCEEDS_LIMIT (4)
+  ARM_STATUS_JOINT_COMMUNICATION_EXCEPTION = 6; // formerly JOINT_COMMUNICATION_EXCEPTION (5)
+  ARM_STATUS_JOINT_BRAKE_NOT_RELEASED = 7;      // formerly JOINT_BRAKE_NOT_RELEASED (6)
+  ARM_STATUS_COLLISION_OCCURRED = 8;            // formerly COLLISION_OCCURRED (7)
+  ARM_STATUS_OVERSPEED_DURING_TEACHING = 9;       // formerly OVERSPEED_DURING_TEACHING (8)
+  ARM_STATUS_JOINT_STATUS_ABNORMAL = 10;          // formerly JOINT_STATUS_ABNORMAL (9)
+  ARM_STATUS_OTHER_EXCEPTION = 11;              // formerly OTHER_EXCEPTION (10)
+  ARM_STATUS_TEACHING_RECORD = 12;              // formerly TEACHING_RECORD (11)
+  ARM_STATUS_TEACHING_EXECUTION = 13;           // formerly TEACHING_EXECUTION (12)
+  ARM_STATUS_TEACHING_PAUSE = 14;               // formerly TEACHING_PAUSE (13)
+  ARM_STATUS_MAIN_CONTROLLER_NTC_OVER_TEMP = 15;// formerly MAIN_CONTROLLER_NTC_OVER_TEMP (14)
+  ARM_STATUS_RELEASE_RESISTOR_NTC_OVER_TEMP = 16;// formerly RELEASE_RESISTOR_NTC_OVER_TEMP (15)
 }
 
-enum ModeFeed {
-  MODE_FEED_UNSPECIFIED = 0;
-  MODE_FEED_IDLE = 1;
-  MODE_FEED_BUSY = 2;
-  MODE_FEED_ERROR = 3;
+enum ModeFeedback {
+  MODE_FEEDBACK_UNSPECIFIED = 0;
+  MODE_FEEDBACK_MOVE_P = 1; // formerly MOVE_P (0)
+  MODE_FEEDBACK_MOVE_J = 2; // formerly MOVE_J (1)
+  MODE_FEEDBACK_MOVE_L = 3; // formerly MOVE_L (2)
+  MODE_FEEDBACK_MOVE_C = 4; // formerly MOVE_C (3)
+  MODE_FEEDBACK_MOVE_M = 5; // formerly MOVE_M (4)
 }
 
 enum TeachStatus {
   TEACH_STATUS_UNSPECIFIED = 0;
-  TEACH_STATUS_IDLE = 1;
-  TEACH_STATUS_BUSY = 2;
-  TEACH_STATUS_ERROR = 3;
+  TEACH_STATUS_OFF = 1;                         // formerly OFF (0)
+  TEACH_STATUS_START_TEACHING_RECORD = 2;       // formerly START_TEACHING_RECORD (1)
+  TEACH_STATUS_END_TEACHING_RECORD = 3;         // formerly END_TEACHING_RECORD (2)
+  TEACH_STATUS_EXECUTE_TEACHING_TRAJECTORY = 4;  // formerly EXECUTE_TEACHING_TRAJECTORY (3)
+  TEACH_STATUS_PAUSE_EXECUTION = 5;             // formerly PAUSE_EXECUTION (4)
+  TEACH_STATUS_CONTINUE_EXECUTION = 6;          // formerly CONTINUE_EXECUTION (5)
+  TEACH_STATUS_TERMINATE_EXECUTION = 7;         // formerly TERMINATE_EXECUTION (6)
+  TEACH_STATUS_MOVE_TO_TRAJECTORY_START = 8;    // formerly MOVE_TO_TRAJECTORY_START (7)
 }
 
 enum MotionStatus {
   MOTION_STATUS_UNSPECIFIED = 0;
-  MOTION_STATUS_IDLE = 1;
-  MOTION_STATUS_BUSY = 2;
-  MOTION_STATUS_ERROR = 3;
+  MOTION_STATUS_REACHED_TARGET = 1;      // formerly REACHED_TARGET (0)
+  MOTION_STATUS_NOT_REACHED_TARGET = 2;  // formerly NOT_REACHED_TARGET (1)
 }
 
-message PiperArmStatus {
-  CtrlMode ctrl_mode = 1;
-  ArmStatus arm_status = 2;
-  ModeFeed mode_feed = 3;
-  TeachStatus teach_status = 4;
-  MotionStatus motion_status = 5;
-  int32 trajectory_num = 6;
-  int32 error_code = 7;
+message ArmMsgStatus {
+  ControlMode ctrl_mode = 1;          // Control mode
+  ArmStatus arm_status = 2;             // Robot arm status
+  ModeFeedback mode_feed = 3;           // Mode feedback
+  TeachStatus teach_status = 4;         // Teaching status
+  MotionStatus motion_status = 5;       // Motion status
+  uint32 trajectory_num = 6;            // Current trajectory point number
+  uint32 err_code = 7;                  // Combined error code
+  ErrorStatus err_status = 8;           // Detailed error status
 }
+
+message ErrorStatus {
+  bool joint_1_angle_limit = 1;
+  bool joint_2_angle_limit = 2;
+  bool joint_3_angle_limit = 3;
+  bool joint_4_angle_limit = 4;
+  bool joint_5_angle_limit = 5;
+  bool joint_6_angle_limit = 6;
+  bool communication_status_joint_1 = 7;
+  bool communication_status_joint_2 = 8;
+  bool communication_status_joint_3 = 9;
+  bool communication_status_joint_4 = 10;
+  bool communication_status_joint_5 = 11;
+  bool communication_status_joint_6 = 12;
+}
+
