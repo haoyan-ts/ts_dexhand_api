@@ -18,7 +18,7 @@ service DexHandControlService {
 
   rpc SetPose(SetPoseRequest) returns (google.protobuf.Empty) {}
   rpc SetJoint(SetJointRequest) returns (google.protobuf.Empty) {}
-  rpc GetStatus(GetJointStateRequest) returns (JointStates) {}
+  rpc GetJointState(GetJointStateRequest) returns (JointState) {}
 
   rpc SendPose(stream SendPoseRequest) returns (stream google.protobuf.Empty) {}
   rpc SendJoint(stream SendJointRequest) returns (stream google.protobuf.Empty) {}
@@ -124,7 +124,7 @@ message ReceiveStatusResponse {
   }
 }
 
-message JointStates {
+message JointState {
   string id = 1;
   string name = 2;
 
