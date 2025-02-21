@@ -16,11 +16,32 @@ service DexHandControlService {
   rpc SetupModel(SetupModelRequest) returns (google.protobuf.Empty) {}
   rpc ChangeControlMode(ChangeControlModeRequest) returns (google.protobuf.Empty) {}
 
+  rpc SetPose(SetPoseRequest) returns (google.protobuf.Empty) {}
+  rpc SetJoint(SetJointRequest) returns (google.protobuf.Empty) {}
+  rpc GetStatus(GetStatusRequest) returns (Status) {}
+
   rpc SendPose(stream SendPoseRequest) returns (stream google.protobuf.Empty) {}
   rpc SendJoint(stream SendJointRequest) returns (stream google.protobuf.Empty) {}
 
   rpc ReceiveStatus(stream ReceiveStatusRequest) returns (stream ReceiveStatusResponse) {}
 }
+
+message SetPoseRequest {
+  string dexhand_id = 1;
+  uint32 num_poses = 2;
+  repeated double poses = 5;
+}
+
+message SetJointRequest {
+  string dexhand_id = 1;
+  uint32 num_angles = 2;
+  repeated double angles = 5;
+}
+
+message GetStatusRequest {
+  string dexhand_id = 1;
+}
+
 
 message ChangeControlModeRequest {
   string dexhand_id = 1;
