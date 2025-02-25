@@ -14,6 +14,8 @@ service DexHandControlService {
   rpc DisconnectDexHand(DisconnectDexHandRequest) returns (google.protobuf.Empty) {}
 
   rpc SetupModel(SetupModelRequest) returns (google.protobuf.Empty) {}
+  rpc SetupInterpolant(SetupInterpolantRequest) returns (google.protobuf.Empty) {}
+
   rpc ChangeControlMode(ChangeControlModeRequest) returns (google.protobuf.Empty) {}
 
   rpc SetPose(SetPoseRequest) returns (google.protobuf.Empty) {}
@@ -24,6 +26,18 @@ service DexHandControlService {
   rpc SendJoint(stream SendJointRequest) returns (stream google.protobuf.Empty) {}
 
   rpc ReceiveStatus(stream ReceiveStatusRequest) returns (stream ReceiveStatusResponse) {}
+}
+
+message SetupInterpolantRequest {
+  message Target {
+    uint32 index = 1;
+    uint32 num_joints = 2;
+    repeated double angles = 3;
+  }
+
+  string id = 1;
+
+  Target target = 2;
 }
 
 message SetPoseRequest {
