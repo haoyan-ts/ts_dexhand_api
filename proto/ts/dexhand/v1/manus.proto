@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "DexHandControlGrpc";
+
+service ManusService {
+    rpc ListSensors(ListSensorsRequest) returns (ListSensorsResponse) {}
+    rpc GetSensor(GetSensorRequest) returns (Sensor) {}
+    rpc CreateSensor(CreateSensorRequest) returns (Sensor) {}
+    rpc UpdateSensor(UpdateSensorRequest) returns (Sensor) {}
+    rpc DeleteSensor(DeleteSensorRequest) returns (google.protobuf.Empty) {}
+
+    rpc SetSensorData(SetSensorDataRequest) returns (SensorData) {}
+}
+
+message ListSensorsRequest {}
+
+message GetSensorRequest {
+    string id = 1;
+}
+message CreateSensorRequest {
+    Sensor sensor = 1;
+}
+message UpdateSensorRequest {
+    Sensor sensor = 1;
+}
+message DeleteSensorRequest {
+    string id = 1;
+}
+message SetSensorDataRequest {
+    string id = 1;
+    SensorData data = 2;
+}
+
+message Sensor {
+    string id = 1;
+    string name = 2;
+    string type = 3;
+    string description = 4;
+}
+
+message SensorData {
+    string id = 1;
+    uint32 timestamp = 3;
+    uint32 num_sequence = 2;
+
+    uint32 num_data = 4;
+    repeated double data = 5;
+}
+
+message ListSensorsResponse {
+    repeated Sensor sensors = 1;
+}
