@@ -18,7 +18,7 @@ service DexHandControlService {
 
   rpc ChangeControlMode(ChangeControlModeRequest) returns (google.protobuf.Empty) {}
 
-  rpc SetPose(SetPoseRequest) returns (google.protobuf.Empty) {}
+  rpc SetPose(SetPoseRequest) returns (JointState) {}
   rpc SetJoint(SetJointRequest) returns (google.protobuf.Empty) {}
   rpc GetJointState(GetJointStateRequest) returns (JointState) {}
 
