@@ -2,55 +2,223 @@ syntax = "proto3";
 
 package ts.dexhand.v1;
 
-import "google/protobuf/empty.proto";
 
 option csharp_namespace = "DexHandControlGrpc";
 
 service ManusService {
+    // Sensor operations
     rpc ListSensors(ListSensorsRequest) returns (ListSensorsResponse) {}
-    rpc GetSensor(GetSensorRequest) returns (Sensor) {}
-    rpc CreateSensor(CreateSensorRequest) returns (Sensor) {}
-    rpc UpdateSensor(UpdateSensorRequest) returns (Sensor) {}
-    rpc DeleteSensor(DeleteSensorRequest) returns (google.protobuf.Empty) {}
+    rpc GetSensor(GetSensorRequest) returns (GetSensorResponse) {}
+    rpc CreateSensor(CreateSensorRequest) returns (CreateSensorResponse) {}
+    rpc UpdateSensor(UpdateSensorRequest) returns (UpdateSensorResponse) {}
+    rpc DeleteSensor(DeleteSensorRequest) returns (DeleteSensorResponse) {}
 
-    rpc SetSensorData(SetSensorDataRequest) returns (SensorData) {}
+    // Hand operations  
+    rpc ListHands(ListHandsRequest) returns (ListHandsResponse) {}
+    rpc GetHand(GetHandRequest) returns (GetHandResponse) {}
+    rpc CreateHand(CreateHandRequest) returns (CreateHandResponse) {}
+    rpc UpdateHand(UpdateHandRequest) returns (UpdateHandResponse) {}
+    rpc DeleteHand(DeleteHandRequest) returns (DeleteHandResponse) {}
+
+    // Wrist operations
+    rpc ListWrists(ListWristsRequest) returns (ListWristsResponse) {}
+    rpc GetWrist(GetWristRequest) returns (GetWristResponse) {}
+    rpc CreateWrist(CreateWristRequest) returns (CreateWristResponse) {}
+    rpc UpdateWrist(UpdateWristRequest) returns (UpdateWristResponse) {}
+    rpc DeleteWrist(DeleteWristRequest) returns (DeleteWristResponse) {}
+
+    // Data operations
+    rpc SetHandData(SetHandDataRequest) returns (SetHandDataResponse) {}
+    rpc SetWristData(SetWristDataRequest) returns (SetWristDataResponse) {}
+    rpc SetSensorData(SetSensorDataRequest) returns (SetSensorDataResponse) {}
 }
 
+// Sensor related messages
 message ListSensorsRequest {}
+
+message ListSensorsResponse {
+    repeated Sensor sensors = 1;
+}
 
 message GetSensorRequest {
     string id = 1;
 }
+
+message GetSensorResponse {
+    Sensor sensor = 1;
+}
+
 message CreateSensorRequest {
     Sensor sensor = 1;
 }
+
+message CreateSensorResponse {
+    Sensor sensor = 1;
+}
+
 message UpdateSensorRequest {
     Sensor sensor = 1;
 }
+
+message UpdateSensorResponse {
+    Sensor sensor = 1;
+}
+
 message DeleteSensorRequest {
     string id = 1;
 }
-message SetSensorDataRequest {
-    string id = 1;
-    SensorData data = 2;
+
+message DeleteSensorResponse {
+    bool success = 1;
 }
 
 message Sensor {
     string id = 1;
     string name = 2;
-    string type = 3;
-    string description = 4;
+    string description = 3;
+    SensorType type = 4;
 }
 
 message SensorData {
     string id = 1;
-    uint32 timestamp = 3;
-    uint32 num_sequence = 2;
-
-    uint32 num_data = 4;
-    repeated double data = 5;
+    uint32 timestamp = 2;
+    uint32 num_sequence = 3;
+    repeated double data = 4;
 }
 
-message ListSensorsResponse {
-    repeated Sensor sensors = 1;
+message SetSensorDataRequest {
+    string id = 1;
+    SensorData data = 2;
+}
+
+message SetSensorDataResponse {
+    bool success = 1;
+}
+
+enum SensorType {
+    SENSOR_TYPE_UNSPECIFIED = 0;
+    SENSOR_TYPE_ACCELEROMETER = 1;
+    SENSOR_TYPE_GYROSCOPE = 2;
+    SENSOR_TYPE_MAGNETOMETER = 3;
+}
+
+message ListHandsRequest {}
+
+message ListHandsResponse {
+    repeated Hand hands = 1;
+}
+
+message GetHandRequest {
+    string id = 1;
+}
+
+message GetHandResponse {
+    Hand hand = 1;
+}
+
+message CreateHandRequest {
+    Hand hand = 1;
+}
+
+message CreateHandResponse {
+    Hand hand = 1;
+}
+
+message UpdateHandRequest {
+    Hand hand = 1;
+}
+
+message UpdateHandResponse {
+    Hand hand = 1;
+}
+
+message DeleteHandRequest {
+    string id = 1;
+}
+
+message DeleteHandResponse {
+    bool success = 1;
+}
+
+message SetHandDataRequest {
+    string id = 1;
+    HandData data = 2;
+}
+
+message SetHandDataResponse {
+    bool success = 1;
+}
+
+message Hand {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+message HandData {
+    string id = 1;
+    uint32 timestamp = 2;
+    uint32 num_sequence = 3;
+    repeated double data = 4;
+}
+
+
+message ListWristsRequest {}
+
+message ListWristsResponse {
+    repeated Wrist wrists = 1;
+}
+
+message GetWristRequest {
+    string id = 1;
+}
+
+message GetWristResponse {
+    Wrist wrist = 1;
+}
+
+message CreateWristRequest {
+    Wrist wrist = 1;
+}
+
+message CreateWristResponse {
+    Wrist wrist = 1;
+}
+
+message UpdateWristRequest {
+    Wrist wrist = 1;
+}
+
+message UpdateWristResponse {
+    Wrist wrist = 1;
+}
+
+message DeleteWristRequest {
+    string id = 1;
+}
+
+message DeleteWristResponse {
+    bool success = 1;
+}
+
+message Wrist {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+message WristData {
+    string id = 1;
+    uint32 timestamp = 2;
+    uint32 num_sequence = 3;
+    repeated double data = 4;
+}
+
+message SetWristDataRequest {
+    string id = 1;
+    WristData data = 2;
+}
+
+message SetWristDataResponse {
+    bool success = 1;
 }
