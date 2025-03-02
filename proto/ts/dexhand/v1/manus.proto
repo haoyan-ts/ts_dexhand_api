@@ -28,7 +28,7 @@ service ManusService {
 message ListHandSensorsRequest {}
 
 message ListHandSensorsResponse {
-  repeated HandSensor handSensors = 1;
+  repeated HandSensor hand_sensors = 1;
 }
 
 message GetHandSensorRequest {
@@ -36,23 +36,23 @@ message GetHandSensorRequest {
 }
 
 message GetHandSensorResponse {
-  HandSensor handSensor = 1;
+  HandSensor hand_sensor = 1;
 }
 
 message CreateHandSensorRequest {
-  HandSensor handSensor = 1;
+  HandSensor hand_sensor = 1;
 }
 
 message CreateHandSensorResponse {
-  HandSensor handSensor = 1;
+  HandSensor hand_sensor = 1;
 }
 
 message UpdateHandSensorRequest {
-  HandSensor handSensor = 1;
+  HandSensor hand_sensor = 1;
 }
 
 message UpdateHandSensorResponse {
-  HandSensor handSensor = 1;
+  HandSensor hand_sensor = 1;
 }
 
 message DeleteHandSensorRequest {
@@ -89,7 +89,7 @@ message HandSensorData {
 message ListWristSensorsRequest {}
 
 message ListWristSensorsResponse {
-  repeated WristSensor wristSensors = 1;
+  repeated WristSensor wrist_sensors = 1;
 }
 
 message GetWristSensorRequest {
@@ -97,23 +97,23 @@ message GetWristSensorRequest {
 }
 
 message GetWristSensorResponse {
-  WristSensor wristSensor = 1;
+  WristSensor wrist_sensor = 1;
 }
 
 message CreateWristSensorRequest {
-  WristSensor wristSensor = 1;
+  WristSensor wrist_sensor = 1;
 }
 
 message CreateWristSensorResponse {
-  WristSensor wristSensor = 1;
+  WristSensor wrist_sensor = 1;
 }
 
 message UpdateWristSensorRequest {
-  WristSensor wristSensor = 1;
+  WristSensor wrist_sensor = 1;
 }
 
 message UpdateWristSensorResponse {
-  WristSensor wristSensor = 1;
+  WristSensor wrist_sensor = 1;
 }
 
 message DeleteWristSensorRequest {
