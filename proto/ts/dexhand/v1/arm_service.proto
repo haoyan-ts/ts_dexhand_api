@@ -1,0 +1,231 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+import "google/protobuf/any.proto";
+
+option csharp_namespace = "TeleoperationServiceGrpc";
+
+service ArmService {
+  // Arm control operations
+  rpc EnableArm(EnableArmRequest) returns (EnableArmResponse) {}
+  rpc DisableArm(DisableArmRequest) returns (DisableArmResponse) {}
+  rpc ConnectArm(ConnectArmRequest) returns (ConnectArmResponse) {}
+  rpc DisconnectArm(DisconnectArmRequest) returns (DisconnectArmResponse) {}
+
+  // Arm pose and joint control
+  rpc ChangeControlMode(ChangeControlModeRequest) returns (ChangeControlModeResponse) {}
+  rpc SetPose(SetPoseRequest) returns (SetPoseResponse) {}
+  rpc SetJoint(SetJointRequest) returns (SetJointResponse) {}
+  rpc GetJointState(GetJointStateRequest) returns (GetJointStateResponse) {}
+
+  // Streaming operations
+  // rpc SendPose(stream SendArmPoseRequest) returns (stream google.protobuf.Empty) {}
+  // rpc SendJoint(stream SendArmJointRequest) returns (stream google.protobuf.Empty) {}
+  // rpc ReceiveStatus(stream ReceiveArmStatusRequest) returns (stream ReceiveArmStatusResponse) {}
+
+  // Arm model operations
+  rpc SetupLerpModel(SetupLerpModelRequest) returns (SetupLerpModelResponse) {}
+  rpc SetupIKModel(SetupIKModelRequest) returns (SetupIKModelResponse) {}
+}
+
+// Base request message with common fields
+message ArmBaseRequest {
+  string id = 1;
+}
+
+// Basic request messages
+message EnableArmRequest {
+  ArmBaseRequest base = 1;
+}
+
+message DisableArmRequest {
+  ArmBaseRequest base = 1;
+}
+
+message ConnectArmRequest {
+  ArmBaseRequest base = 1;
+}
+
+message DisconnectArmRequest {
+  ArmBaseRequest base = 1;
+}
+
+// Control mode
+message ChangeControlModeRequest {
+  string id = 1;
+  uint32 control_mode = 2;
+}
+
+message ChangeControlModeResponse {
+  bool success = 1;
+}
+
+// Pose and joint control
+message SetPoseRequest {
+  string id = 1;
+  Pose pose = 2;
+}
+
+message Pose {
+  uint32 num_poses = 1;
+  repeated double poses = 2;
+}
+
+message SetJointRequest {
+  string id = 1;
+  Joint joint = 2;
+}
+
+message Joint {
+  uint32 num_joints = 1;
+  repeated double angles = 2;
+}
+
+message SetPoseResponse {
+  bool success = 1;
+}
+
+message SetJointResponse {
+  bool success = 1;
+}
+
+message GetJointStateRequest {
+  string id = 1;
+}
+
+message JointState {
+  Joint joint = 1;
+  uint32 timestamp = 2;
+}
+
+message GetJointStateResponse {
+  JointState joint_state = 1;
+}
+
+// Streaming messages
+// message ArmPacketHeader {
+//   string arm_id = 1;
+//   ArmPacketType type = 2;
+//   uint32 length = 3;
+// }
+
+// message ArmPacket {
+//   ArmPacketHeader header = 1;
+//   repeated double poses = 2;
+//   Vector3 position = 3;
+//   Quaternion orientation = 4;
+// }
+
+// message ArmSetupRequest {
+//   string arm_id = 1;
+//   ArmPacketType type = 2;
+//   uint32 length = 3;
+// }
+
+// message ArmCancelRequest {
+//   string arm_id = 1;
+// }
+
+// message SendArmPoseRequest {
+//   oneof request {
+//     ArmSetupRequest setup_request = 1;
+//     ArmPacket packet_request = 2;
+//     ArmCancelRequest cancel_request = 3;
+//   }
+// }
+
+// message SendArmJointRequest {
+//   oneof request {
+//     ArmSetupRequest setup_request = 1;
+//     ArmPacket packet_request = 2;
+//     ArmCancelRequest cancel_request = 3;
+//   }
+// }
+
+// message ReceiveArmStatusRequest {
+//   oneof request {
+//     ArmSetupRequest setup_request = 1;
+//     ArmCancelRequest cancel_request = 2;
+//   }
+// }
+
+// message ReceiveArmStatusResponse {
+//   oneof response {
+//     ArmStatus status = 1;
+//     ArmException exception = 2;
+//     ArmExit exit = 3;
+//   }
+// }
+
+// message ArmStatus {
+//   string id = 1;
+//   string name = 2;
+//   google.protobuf.Any data = 3;
+//   repeated double angles = 4;
+//   Vector3 position = 5;
+//   Quaternion orientation = 6;
+// }
+
+// message ArmException {
+//   string message = 1;
+// }
+
+// message ArmExit {}
+
+// enum ArmPacketType {
+//   ARM_PACKET_TYPE_UNSPECIFIED = 0;
+//   ARM_PACKET_TYPE_POSE = 1;
+//   ARM_PACKET_TYPE_JOINT = 2;
+//   ARM_PACKET_TYPE_CARTESIAN = 3;
+// }
+
+// Model setup
+message SetupLerpModelRequest {
+  message Target {
+    uint32 index = 1;
+    uint32 num_joints = 2;
+    repeated double joint_angles = 3;
+  }
+
+  string id = 1;
+  Target target_data = 2;
+}
+
+message SetupIKModelRequest {
+  string id = 1;
+  google.protobuf.Any ik_model = 2;
+}
+
+message SetupLerpModelResponse {
+  bool success = 1;
+}
+
+message SetupIKModelResponse {
+  bool success = 1;
+}
+
+// Response messages for operations that previously returned Empty
+message EnableArmResponse {
+  bool success = 1;
+}
+
+message DisableArmResponse {
+  bool success = 1;
+}
+
+message ConnectArmResponse {
+  bool success = 1;
+}
+
+message DisconnectArmResponse {
+  bool success = 1;
+}
+
+message ChangeArmControlModeResponse {
+  bool success = 1;
+}
+
+message SetArmJointResponse {
+  bool success = 1;
+}

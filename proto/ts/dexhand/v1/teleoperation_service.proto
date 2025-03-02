@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+import "ts/dexhand/v1/common.proto";
+
+option csharp_namespace = "TeleoperationServiceGrpc";
+
+service TeleoperationService {
+  // Arm CRUD operations
+  rpc ListArms(ListArmsRequest) returns (ListArmsResponse) {}
+  rpc GetArm(GetArmRequest) returns (GetArmResponse) {}
+  rpc CreateArm(CreateArmRequest) returns (CreateArmResponse) {}
+  rpc UpdateArm(UpdateArmRequest) returns (UpdateArmResponse) {}
+  rpc DeleteArm(DeleteArmRequest) returns (DeleteArmResponse) {}
+
+  // Hand CRUD operations
+  rpc ListHands(ListHandsRequest) returns (ListHandsResponse) {}
+  rpc GetHand(GetHandRequest) returns (GetHandResponse) {}
+  rpc CreateHand(CreateHandRequest) returns (CreateHandResponse) {}
+  rpc UpdateHand(UpdateHandRequest) returns (UpdateHandResponse) {}
+  rpc DeleteHand(DeleteHandRequest) returns (DeleteHandResponse) {}
+}
+
+// Arm CRUD messages
+message ListArmsRequest {}
+
+message ListArmsResponse {
+  repeated Arm arms = 1;
+}
+
+message GetArmRequest {
+  string id = 1;
+}
+
+message GetArmResponse {
+  Arm arm = 1;
+}
+
+message CreateArmRequest {
+  Arm arm = 1;
+}
+
+message CreateArmResponse {
+  Arm arm = 1;
+}
+
+message UpdateArmRequest {
+  Arm arm = 1;
+}
+
+message UpdateArmResponse {
+  Arm arm = 1;
+}
+
+message DeleteArmRequest {
+  string id = 1;
+}
+
+message DeleteArmResponse {
+  bool success = 1;
+}
+
+message Arm {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  ArmType type = 4;
+  Side side = 5;
+}
+
+// Hand CRUD messages
+message ListHandsRequest {}
+
+message ListHandsResponse {
+  repeated Hand hands = 1;
+}
+
+message GetHandRequest {
+  string id = 1;
+}
+
+message GetHandResponse {
+  Hand hand = 1;
+}
+
+message CreateHandRequest {
+  Hand hand = 1;
+}
+
+message CreateHandResponse {
+  Hand hand = 1;
+}
+
+message UpdateHandRequest {
+  Hand hand = 1;
+}
+
+message UpdateHandResponse {
+  Hand hand = 1;
+}
+
+message DeleteHandRequest {
+  string id = 1;
+}
+
+message DeleteHandResponse {
+  bool success = 1;
+}
+
+message Hand {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  HandType type = 4;
+  Side side = 5;
+}

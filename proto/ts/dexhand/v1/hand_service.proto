@@ -1,0 +1,235 @@
+syntax = "proto3";
+
+package ts.dexhand.v1;
+
+import "google/protobuf/any.proto";
+import "ts/dexhand/v1/common.proto";
+
+option csharp_namespace = "TeleoperationServiceGrpc";
+
+service HandService {
+  // Hand control operations
+  rpc EnableHand(EnableHandRequest) returns (EnableHandResponse) {}
+  rpc DisableHand(DisableHandRequest) returns (DisableHandResponse) {}
+  rpc ConnectHand(ConnectHandRequest) returns (ConnectHandResponse) {}
+  rpc DisconnectHand(DisconnectHandRequest) returns (DisconnectHandResponse) {}
+
+  // Hand pose control
+  rpc SetHandPose(SetHandPoseRequest) returns (SetHandPoseResponse) {}
+
+  // // Streaming operations
+  // rpc SendPose(stream SendHandPoseRequest) returns (stream SendHandPoseResponse) {}
+  // rpc SendJoint(stream SendHandJointRequest) returns (stream SendHandJointResponse) {}
+  // rpc ReceiveStatus(stream ReceiveHandStatusRequest) returns (stream ReceiveHandStatusResp
+}
+
+// Base request message with common fields
+message HandBaseRequest {
+  string name = 1;
+  string id = 2;
+}
+
+// Basic request messages
+message EnableHandRequest {
+  HandBaseRequest base = 1;
+  HandType hand_type = 2;
+}
+
+message DisableHandRequest {
+  HandBaseRequest base = 1;
+}
+
+message ConnectHandRequest {
+  HandBaseRequest base = 1;
+}
+
+message DisconnectHandRequest {
+  HandBaseRequest base = 1;
+}
+
+// Control mode
+message ChangeHandControlModeRequest {
+  string hand_id = 1;
+  uint32 control_mode = 2;
+}
+
+// Pose and joint control
+message SetHandPoseRequest {
+  string hand_id = 1;
+  uint32 num_poses = 2;
+  repeated double poses = 3;
+}
+
+message SetHandJointRequest {
+  string hand_id = 1;
+  uint32 num_angles = 2;
+  repeated double angles = 3;
+}
+
+message GetHandJointStateRequest {
+  string hand_id = 1;
+}
+
+message HandJointState {
+  string id = 1;
+  string name = 2;
+  repeated double angles = 3;
+}
+
+message HandJointStateResponse {
+  HandJointState joint_state = 1;
+}
+
+// Streaming messages
+message HandPacketHeader {
+  string hand_id = 1;
+  HandPacketType type = 2;
+  uint32 length = 3;
+}
+
+message HandPacket {
+  HandPacketHeader header = 1;
+  repeated double poses = 2;
+}
+
+message HandSetupRequest {
+  string hand_id = 1;
+  HandPacketType type = 2;
+  uint32 length = 3;
+}
+
+message HandCancelRequest {
+  string hand_id = 1;
+}
+
+message SendHandPoseRequest {
+  oneof request {
+    HandSetupRequest setup_request = 1;
+    HandPacket packet_request = 2;
+    HandCancelRequest cancel_request = 3;
+  }
+}
+
+message SendHandJointRequest {
+  oneof request {
+    HandSetupRequest setup_request = 1;
+    HandPacket packet_request = 2;
+    HandCancelRequest cancel_request = 3;
+  }
+}
+
+message ReceiveHandStatusRequest {
+  oneof request {
+    HandSetupRequest setup_request = 1;
+    HandCancelRequest cancel_request = 2;
+  }
+}
+
+message ReceiveHandStatusResponse {
+  oneof response {
+    HandStatus status = 1;
+    HandException exception = 2;
+    HandExit exit = 3;
+  }
+}
+
+message HandStatus {
+  string id = 1;
+  string name = 2;
+  google.protobuf.Any data = 3;
+  repeated double angles = 4;
+}
+
+message HandException {
+  string message = 1;
+}
+
+message HandExit {}
+
+enum HandPacketType {
+  HAND_PACKET_TYPE_UNSPECIFIED = 0;
+  HAND_PACKET_TYPE_POSE = 1;
+  HAND_PACKET_TYPE_JOINT = 2;
+}
+
+// Model setup
+message SetupHandModelRequest {
+  string hand_id = 1;
+  HandModelType model_type = 2;
+
+  oneof model {
+    google.protobuf.Any ik_model = 3;
+    HandLerpModel lerp_model = 4;
+  }
+}
+
+message HandLerpModel {
+  message AngleData {
+    repeated double angles = 1;
+  }
+
+  uint32 num_data = 1;
+  repeated AngleData data = 2;
+}
+
+enum HandModelType {
+  HAND_MODEL_TYPE_UNSPECIFIED = 0;
+  HAND_MODEL_TYPE_IK = 1;
+  HAND_MODEL_TYPE_LERP = 2;
+}
+
+message SetupHandInterpolantRequest {
+  message Target {
+    uint32 index = 1;
+    uint32 num_joints = 2;
+    repeated double angles = 3;
+  }
+
+  string id = 1;
+  Target target = 2;
+}
+
+// Response messages for operations that previously returned Empty
+message EnableHandResponse {
+  bool success = 1;
+}
+
+message DisableHandResponse {
+  bool success = 1;
+}
+
+message ConnectHandResponse {
+  bool success = 1;
+}
+
+message DisconnectHandResponse {
+  bool success = 1;
+}
+
+message ChangeHandControlModeResponse {
+  bool success = 1;
+}
+
+message SetHandPoseResponse {
+  bool success = 1;
+}
+
+message SetHandJointResponse {
+  bool success = 1;
+}
+
+message SendHandPoseResponse {
+  bool success = 1;
+}
+
+message SendHandJointResponse {
+  bool success = 1;
+}
+
+message SetupHandModelResponse {
+  bool success = 1;
+}
+
+message SetupHandInterpolantResponse {
+  bool success = 1;
+}
