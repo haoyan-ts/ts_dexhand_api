@@ -4,6 +4,8 @@ package ts.dexhand.v1;
 
 option csharp_namespace = "TeleoperationServiceGrpc";
 
+import "ts/dexhand/v1/common.proto";
+
 service ManusService {
   // Hand operations
   rpc ListHandSensors(ListHandSensorsRequest) returns (ListHandSensorsResponse) {}
@@ -75,7 +77,8 @@ message SetHandSensorDataResponse {
 message HandSensor {
   string id = 1;
   string name = 2;
-  string description = 3;
+  Side side = 3;
+  string description = 4;
 }
 
 message HandSensorData {
@@ -127,7 +130,8 @@ message DeleteWristSensorResponse {
 message WristSensor {
   string id = 1;
   string name = 2;
-  string description = 3;
+  Side side = 3;
+  string description = 4;
 }
 
 message WristSensorData {
