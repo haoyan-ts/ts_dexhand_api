@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package ts.dexhand.v1;
 
-option csharp_namespace = "TeleoperationServiceGrpc";
-
 import "ts/dexhand/v1/common.proto";
+
+option csharp_namespace = "TeleoperationServiceGrpc";
 
 service ManusService {
   // Hand operations
@@ -14,12 +14,26 @@ service ManusService {
   rpc UpdateHandSensor(UpdateHandSensorRequest) returns (UpdateHandSensorResponse) {}
   rpc DeleteHandSensor(DeleteHandSensorRequest) returns (DeleteHandSensorResponse) {}
 
+  // Glove CRUD operations - alias for HandSensor
+  rpc ListGloves(ListGlovesRequest) returns (ListGlovesResponse) {}
+  rpc GetGlove(GetGloveRequest) returns (GetGloveResponse) {}
+  rpc CreateGlove(CreateGloveRequest) returns (CreateGloveResponse) {}
+  rpc UpdateGlove(UpdateGloveRequest) returns (UpdateGloveResponse) {}
+  rpc DeleteGlove(DeleteGloveRequest) returns (DeleteGloveResponse) {}
+
   // Wrist operations
   rpc ListWristSensors(ListWristSensorsRequest) returns (ListWristSensorsResponse) {}
   rpc GetWristSensor(GetWristSensorRequest) returns (GetWristSensorResponse) {}
   rpc CreateWristSensor(CreateWristSensorRequest) returns (CreateWristSensorResponse) {}
   rpc UpdateWristSensor(UpdateWristSensorRequest) returns (UpdateWristSensorResponse) {}
   rpc DeleteWristSensor(DeleteWristSensorRequest) returns (DeleteWristSensorResponse) {}
+
+  // Tracker operations
+  rpc ListTrackers(ListTrackersRequest) returns (ListTrackersResponse) {}
+  rpc GetTracker(GetTrackerRequest) returns (GetTrackerResponse) {}
+  rpc CreateTracker(CreateTrackerRequest) returns (CreateTrackerResponse) {}
+  rpc UpdateTracker(UpdateTrackerRequest) returns (UpdateTrackerResponse) {}
+  rpc DeleteTracker(DeleteTrackerRequest) returns (DeleteTrackerResponse) {}
 
   // Data operations
   rpc SetHandSensorData(SetHandSensorDataRequest) returns (SetHandSensorDataResponse) {}
@@ -61,6 +75,164 @@ message GetFramesResponse {
   repeated FramePair frame_pairs = 1;
 }
 
+// Glove related messages
+message Glove {
+  // uint32_t in Manus Core
+  string id = 1;
+
+  string name = 2;
+  Side side = 3;
+  string description = 4;
+}
+
+message ListGlovesRequest {}
+
+message ListGlovesResponse {
+  repeated Glove gloves = 1;
+}
+
+message GetGloveRequest {
+  string id = 1;
+}
+
+message GetGloveResponse {
+  Glove glove = 1;
+}
+
+message CreateGloveRequest {
+  Glove glove = 1;
+}
+
+message CreateGloveResponse {
+  Glove glove = 1;
+}
+
+message UpdateGloveRequest {
+  Glove glove = 1;
+}
+
+message UpdateGloveResponse {
+  Glove glove = 1;
+}
+
+message DeleteGloveRequest {
+  string id = 1;
+}
+
+message DeleteGloveResponse {
+  bool success = 1;
+}
+
+message ErgonomicsData {
+  string id = 1;
+  uint32 timestamp = 2;
+
+  repeated float data = 3;
+}
+
+message SetGloveDataRequest {
+  string id = 1;
+  ErgonomicsData ergonomics_data = 2;
+}
+
+message SetGloveDataResponse {
+  bool success = 1;
+}
+
+message GetGloveDataRequest {
+  string id = 1;
+}
+
+message GetGloveDataResponse {
+  ErgonomicsData ergonomics_data = 1;
+}
+
+// Tracker related messages
+enum TrackerType {
+  TRACKER_TYPE_UNSPECIFIED = 0;
+  TRACKER_TYPE_HEAD = 1;
+  TRACKER_TYPE_WAIST = 2;
+  TRACKER_TYPE_LEFT_HAND = 3;
+  TRACKER_TYPE_RIGHT_HAND = 4;
+  TRACKER_TYPE_LEFT_FOOT = 5;
+  TRACKER_TYPE_RIGHT_FOOT = 6;
+  TRACKER_TYPE_LEFT_UPPER_ARM = 7;
+  TRACKER_TYPE_RIGHT_UPPER_ARM = 8;
+  TRACKER_TYPE_LEFT_UPPER_LEG = 9;
+  TRACKER_TYPE_RIGHT_UPPER_LEG = 10;
+  TRACKER_TYPE_CONTROLLER = 11;
+  TRACKER_TYPE_CAMERA = 12;
+}
+
+message Tracker {
+  string id = 1;
+
+  string name = 2;
+  string description = 3;
+  TrackerType type = 4;
+}
+
+message ListTrackersRequest {}
+
+message ListTrackersResponse {
+  repeated Tracker trackers = 1;
+}
+
+message GetTrackerRequest {
+  string id = 1;
+}
+
+message GetTrackerResponse {
+  Tracker tracker = 1;
+}
+
+message CreateTrackerRequest {
+  Tracker tracker = 1;
+}
+
+message CreateTrackerResponse {
+  Tracker tracker = 1;
+}
+
+message UpdateTrackerRequest {
+  Tracker tracker = 1;
+}
+
+message UpdateTrackerResponse {
+  Tracker tracker = 1;
+}
+
+message DeleteTrackerRequest {
+  string id = 1;
+}
+
+message DeleteTrackerResponse {
+  bool success = 1;
+}
+
+message TrackerData {
+  string id = 1;
+  uint32 timestamp = 2;
+
+  // x, y, z, qx, qy, qz, qw
+  repeated double pose = 4;
+}
+
+message SetTrackerDataRequest {
+  TrackerData data = 1;
+}
+
+message SetTrackerDataResponse {
+  bool success = 1;
+}
+
+message GetTrackerDataRequest {
+  string id = 1;
+}
+
+message GetTrackerDataResponse {
+  TrackerData data = 1;
+}
 
 // HandSensor related messages
 message ListHandSensorsRequest {}
