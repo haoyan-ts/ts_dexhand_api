@@ -24,7 +24,43 @@ service ManusService {
   // Data operations
   rpc SetHandSensorData(SetHandSensorDataRequest) returns (SetHandSensorDataResponse) {}
   rpc SetWristSensorData(SetWristSensorDataRequest) returns (SetWristSensorDataResponse) {}
+
+  // World operations
+  rpc GetFrames(GetFramesRequest) returns (GetFramesResponse) {}
+  rpc SetFrame(SetFrameRequest) returns (SetFrameResponse) {}
 }
+
+// World related messages
+message TargetFrame {
+  Vector3 position = 1;
+}
+
+message SourceFrame {
+  Vector3 position = 1;
+}
+
+message SetFrameRequest {
+  string index = 1;
+  TargetFrame target = 2;
+  SourceFrame source = 3;
+}
+
+message SetFrameResponse {
+  bool success = 1;
+}
+
+message GetFramesRequest {}
+
+message GetFramesResponse {
+  message FramePair {
+    string index = 1;
+    TargetFrame target = 2;
+    SourceFrame source = 3;
+  }
+
+  repeated FramePair frame_pairs = 1;
+}
+
 
 // HandSensor related messages
 message ListHandSensorsRequest {}
