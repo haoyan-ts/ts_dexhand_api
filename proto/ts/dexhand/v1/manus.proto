@@ -53,6 +53,9 @@ service ManusService {
 // World related messages
 message FrameTransformation {
   repeated FrameTransformationData data = 1;
+  float scale = 2;
+  repeated float translation = 3;
+  repeated float rotation = 4;
 }
 
 message FrameTransformationData {
