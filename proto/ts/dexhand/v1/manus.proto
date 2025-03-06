@@ -52,7 +52,7 @@ service ManusService {
 
 // World related messages
 message FrameTransformation {
-  repeated FrameTransformationData frame_transformations = 1;
+  repeated FrameTransformationData data = 1;
 }
 
 message FrameTransformationData {
