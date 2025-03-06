@@ -40,11 +40,54 @@ service ManusService {
   rpc SetWristSensorData(SetWristSensorDataRequest) returns (SetWristSensorDataResponse) {}
 
   // World operations
-  rpc GetFrames(GetFramesRequest) returns (GetFramesResponse) {}
+  rpc CreateFrameTransformation(CreateFrameTransformationRequest) returns (CreateFrameTransformationResponse) {}
+  rpc UpdateFrameTransformation(UpdateFrameTransformationRequest) returns (UpdateFrameTransformationResponse) {}
+  rpc DeleteFrameTransformation(DeleteFrameTransformationRequest) returns (DeleteFrameTransformationResponse) {}
+  rpc GetFrameTransformation(GetFrameTransformationRequest) returns (GetFrameTransformationResponse) {}
+
+  // deprecated
   rpc SetFrame(SetFrameRequest) returns (SetFrameResponse) {}
+  rpc GetFrames(GetFramesRequest) returns (GetFramesResponse) {}
 }
 
 // World related messages
+message FrameTransformation {
+  repeated FrameTransformationData frame_transformations = 1;
+}
+
+message FrameTransformationData {
+  Vector3 source = 1;  // Source reference frame
+  Vector3 target = 2;  // Target reference frame
+}
+
+message CreateFrameTransformationRequest {}
+
+message CreateFrameTransformationResponse {
+  FrameTransformation frame_transformation = 1;
+}
+
+message UpdateFrameTransformationRequest {
+  FrameTransformation frame_transformation = 1;
+}
+
+message UpdateFrameTransformationResponse {
+  FrameTransformation frame_transformation = 1;
+}
+
+message DeleteFrameTransformationRequest {}
+
+message DeleteFrameTransformationResponse {
+  bool success = 1;
+}
+
+message GetFrameTransformationRequest {}
+
+message GetFrameTransformationResponse {
+  FrameTransformation frame_transformation = 1;
+}
+
+// Frame related messages - deprecated
+
 message TargetFrame {
   Vector3 position = 1;
 }
@@ -357,3 +400,4 @@ message SetWristSensorDataRequest {
 message SetWristSensorDataResponse {
   bool success = 1;
 }
+
