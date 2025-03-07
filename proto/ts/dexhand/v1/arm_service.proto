@@ -18,6 +18,8 @@ service ArmService {
   rpc SetPose(SetPoseRequest) returns (SetPoseResponse) {}
   rpc SetJoint(SetJointRequest) returns (SetJointResponse) {}
   rpc GetJointState(GetJointStateRequest) returns (GetJointStateResponse) {}
+  rpc MoveJoint(MoveJointRequest) returns (MoveJointResponse) {}
+  rpc MovePose(MovePoseRequest) returns (MovePoseResponse) {}
 
   // Streaming operations
   // rpc SendPose(stream SendArmPoseRequest) returns (stream google.protobuf.Empty) {}
@@ -28,6 +30,35 @@ service ArmService {
   rpc SetupLerpModel(SetupLerpModelRequest) returns (SetupLerpModelResponse) {}
   rpc SetupIKModel(SetupIKModelRequest) returns (SetupIKModelResponse) {}
 }
+
+// Move joint request
+message MoveJointRequest {
+  string id = 1;
+  repeated double joint_angles = 2;
+}
+
+message MoveJointResponse {
+  bool success = 1;
+}
+
+// Move pose
+message MovePoseRequest {
+  string id = 1;
+  repeated double poses = 2;
+}
+
+message MovePoseResponse {
+  bool success = 1;
+}
+
+
+
+
+
+
+
+
+
 
 // Base request message with common fields
 message ArmBaseRequest {
