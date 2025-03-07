@@ -29,6 +29,12 @@ service ArmService {
   // Arm model operations
   rpc SetupLerpModel(SetupLerpModelRequest) returns (SetupLerpModelResponse) {}
   rpc SetupIKModel(SetupIKModelRequest) returns (SetupIKModelResponse) {}
+
+  // Lerp model operations
+  rpc CreateLerpModel(CreateLerpModelRequest) returns (CreateLerpModelResponse) {}
+  rpc GetLerpModel(GetLerpModelRequest) returns (GetLerpModelResponse) {}
+  rpc UpdateLerpModel(UpdateLerpModelRequest) returns (UpdateLerpModelResponse) {}
+  rpc DeleteLerpModel(DeleteLerpModelRequest) returns (DeleteLerpModelResponse) {}
 }
 
 // Move joint request
@@ -51,13 +57,53 @@ message MovePoseResponse {
   bool success = 1;
 }
 
+// Lerp model operations
+message LerpPose {
+  uint32 num_poses = 1;
+  repeated double poses = 2;
+}
 
+message LerpModel {
+  string mode_id = 1;
+  string name = 2;
+  repeated LerpPose lerp_model_poses = 3;
+}
 
+message CreateLerpModelRequest {
+  string arm_id = 1;
+}
 
+message CreateLerpModelResponse {
+  string arm_id = 1;
+  LerpModel lerp_model = 2;
+}
 
+message GetLerpModelRequest {
+  string arm_id = 1;
+}
 
+message GetLerpModelResponse {
+  string arm_id = 1;
+  LerpModel lerp_model = 2;
+}
 
+message UpdateLerpModelRequest {
+  string arm_id = 1;
+  LerpModel lerp_model = 2;
+}
 
+message UpdateLerpModelResponse {
+  string arm_id = 1;
+  LerpModel lerp_model = 2;
+}
+
+message DeleteLerpModelRequest {
+  string arm_id = 1;
+}
+
+message DeleteLerpModelResponse {
+  bool success = 1;
+}
 
 
 // Base request message with common fields
