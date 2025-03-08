@@ -221,7 +221,8 @@ message Tracker {
 
   string name = 2;
   string description = 3;
-  TrackerType type = 4;
+  Side side = 4;
+  TrackerType type = 5;
 }
 
 message ListTrackersRequest {}
