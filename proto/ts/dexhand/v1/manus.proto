@@ -271,7 +271,8 @@ message TrackerData {
 }
 
 message SetTrackerDataRequest {
-  TrackerData data = 1;
+  string id = 1;
+  TrackerData data = 2;
 }
 
 message SetTrackerDataResponse {
