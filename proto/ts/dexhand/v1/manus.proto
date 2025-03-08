@@ -39,6 +39,11 @@ service ManusService {
   rpc SetHandSensorData(SetHandSensorDataRequest) returns (SetHandSensorDataResponse) {}
   rpc SetWristSensorData(SetWristSensorDataRequest) returns (SetWristSensorDataResponse) {}
 
+  rpc SetGloveData(SetGloveDataRequest) returns (SetGloveDataResponse) {}
+  rpc GetGloveData(GetGloveDataRequest) returns (GetGloveDataResponse) {}
+  rpc SetTrackerData(SetTrackerDataRequest) returns (SetTrackerDataResponse) {}
+  rpc GetTrackerData(GetTrackerDataRequest) returns (GetTrackerDataResponse) {}
+
   // World operations
   rpc CreateFrameTransformation(CreateFrameTransformationRequest) returns (CreateFrameTransformationResponse) {}
   rpc UpdateFrameTransformation(UpdateFrameTransformationRequest) returns (UpdateFrameTransformationResponse) {}
@@ -59,8 +64,8 @@ message FrameTransformation {
 }
 
 message FrameTransformationData {
-  Vector3 source = 1;  // Source reference frame
-  Vector3 target = 2;  // Target reference frame
+  Vector3 source = 1; // Source reference frame
+  Vector3 target = 2; // Target reference frame
 }
 
 message CreateFrameTransformationRequest {}
@@ -173,7 +178,7 @@ message ErgonomicsData {
   string id = 1;
   uint32 timestamp = 2;
 
-  repeated float data = 3;
+  repeated double data = 3;
 }
 
 message SetGloveDataRequest {
@@ -190,7 +195,8 @@ message GetGloveDataRequest {
 }
 
 message GetGloveDataResponse {
-  ErgonomicsData ergonomics_data = 1;
+  string id = 1;
+  ErgonomicsData ergonomics_data = 2;
 }
 
 // Tracker related messages
@@ -404,3 +410,10 @@ message SetWristSensorDataResponse {
   bool success = 1;
 }
 
+message GloveData {
+  string id = 1;
+  uint32 timestamp = 2;
+  uint32 num_sequence = 3;
+
+  repeated double data = 4;
+}
