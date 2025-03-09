@@ -129,28 +129,28 @@ message ChangeControlModeResponse {
   bool success = 1;
 }
 
-message JointAngle {
-  repeated double angles = 1;
+message JointAngleData {
+  repeated double data = 1;
 }
 
 message GetJointRequest {
-  string id = 1;
+  Arm arm = 1;
 }
 
 message GetJointResponse {
-  JointAngle joint_angles = 2;
+  JointAngleData joint_angles = 1;
 }
 
-message Pose {
-  repeated double poses = 1;
+message PoseData {
+  repeated double data = 1;
 }
 
 message GetPoseRequest {
-  string id = 1;
+  Arm arm = 1;
 }
 
 message GetPoseResponse {
-  Pose pose = 1;
+  PoseData poses = 1;
 }
 
 // Response messages for operations that previously returned Empty

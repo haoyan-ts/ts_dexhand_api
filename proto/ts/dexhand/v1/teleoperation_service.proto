@@ -30,7 +30,7 @@ message ListArmsResponse {
 }
 
 message GetArmRequest {
-  string id = 1;
+  Arm arm = 1;
 }
 
 message GetArmResponse {
@@ -54,7 +54,7 @@ message UpdateArmResponse {
 }
 
 message DeleteArmRequest {
-  string id = 1;
+  Arm arm = 1;
 }
 
 message DeleteArmResponse {
@@ -84,7 +84,7 @@ message ListHandsResponse {
 }
 
 message GetHandRequest {
-  string id = 1;
+  Hand hand = 1;
 }
 
 message GetHandResponse {
@@ -108,7 +108,7 @@ message UpdateHandResponse {
 }
 
 message DeleteHandRequest {
-  string id = 1;
+  Hand hand = 1;
 }
 
 message DeleteHandResponse {
