@@ -67,6 +67,13 @@ message Arm {
   string description = 3;
   ArmType type = 4;
   Side side = 5;
+  HardwareMetadata hardware_metadata = 6;
+}
+
+message HardwareMetadata {
+  string hardware_id = 1;
+  string hardware_port = 2;
+  bool is_existed = 3;
 }
 
 // Hand CRUD messages
@@ -114,4 +121,5 @@ message Hand {
   string description = 3;
   HandType type = 4;
   Side side = 5;
+  HardwareMetadata hardware_metadata = 6;
 }
