@@ -3,6 +3,7 @@ syntax = "proto3";
 package ts.dexhand.v1;
 
 import "ts/dexhand/v1/teleoperation_service.proto";
+import "ts/dexhand/v1/common.proto";
 
 option csharp_namespace = "TeleoperationServiceGrpc";
 
@@ -34,6 +35,7 @@ message DisableHandRequest {
 
 message ConnectHandRequest {
   Hand hand = 1;
+  PortConfig port_config = 2;
 }
 
 message DisconnectHandRequest {

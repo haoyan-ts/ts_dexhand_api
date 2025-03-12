@@ -7,13 +7,6 @@ import "ts/dexhand/v1/common.proto";
 option csharp_namespace = "TeleoperationServiceGrpc";
 
 service ManusService {
-  // Hand operations
-  rpc ListHandSensors(ListHandSensorsRequest) returns (ListHandSensorsResponse) {}
-  rpc GetHandSensor(GetHandSensorRequest) returns (GetHandSensorResponse) {}
-  rpc CreateHandSensor(CreateHandSensorRequest) returns (CreateHandSensorResponse) {}
-  rpc UpdateHandSensor(UpdateHandSensorRequest) returns (UpdateHandSensorResponse) {}
-  rpc DeleteHandSensor(DeleteHandSensorRequest) returns (DeleteHandSensorResponse) {}
-
   // Glove CRUD operations - alias for HandSensor
   rpc ListGloves(ListGlovesRequest) returns (ListGlovesResponse) {}
   rpc GetGlove(GetGloveRequest) returns (GetGloveResponse) {}
@@ -21,23 +14,10 @@ service ManusService {
   rpc UpdateGlove(UpdateGloveRequest) returns (UpdateGloveResponse) {}
   rpc DeleteGlove(DeleteGloveRequest) returns (DeleteGloveResponse) {}
 
-  // Wrist operations
-  rpc ListWristSensors(ListWristSensorsRequest) returns (ListWristSensorsResponse) {}
-  rpc GetWristSensor(GetWristSensorRequest) returns (GetWristSensorResponse) {}
-  rpc CreateWristSensor(CreateWristSensorRequest) returns (CreateWristSensorResponse) {}
-  rpc UpdateWristSensor(UpdateWristSensorRequest) returns (UpdateWristSensorResponse) {}
-  rpc DeleteWristSensor(DeleteWristSensorRequest) returns (DeleteWristSensorResponse) {}
-
-  // Tracker operations
-  rpc ListTrackers(ListTrackersRequest) returns (ListTrackersResponse) {}
   rpc GetTracker(GetTrackerRequest) returns (GetTrackerResponse) {}
   rpc CreateTracker(CreateTrackerRequest) returns (CreateTrackerResponse) {}
   rpc UpdateTracker(UpdateTrackerRequest) returns (UpdateTrackerResponse) {}
   rpc DeleteTracker(DeleteTrackerRequest) returns (DeleteTrackerResponse) {}
-
-  // Data operations
-  rpc SetHandSensorData(SetHandSensorDataRequest) returns (SetHandSensorDataResponse) {}
-  rpc SetWristSensorData(SetWristSensorDataRequest) returns (SetWristSensorDataResponse) {}
 
   rpc SetGloveData(SetGloveDataRequest) returns (SetGloveDataResponse) {}
   rpc GetGloveData(GetGloveDataRequest) returns (GetGloveDataResponse) {}
@@ -50,9 +30,6 @@ service ManusService {
   rpc DeleteFrameTransformation(DeleteFrameTransformationRequest) returns (DeleteFrameTransformationResponse) {}
   rpc GetFrameTransformation(GetFrameTransformationRequest) returns (GetFrameTransformationResponse) {}
 
-  // deprecated
-  rpc SetFrame(SetFrameRequest) returns (SetFrameResponse) {}
-  rpc GetFrames(GetFramesRequest) returns (GetFramesResponse) {}
 }
 
 // World related messages
@@ -286,130 +263,6 @@ message GetTrackerDataRequest {
 
 message GetTrackerDataResponse {
   TrackerData data = 1;
-}
-
-// HandSensor related messages
-message ListHandSensorsRequest {}
-
-message ListHandSensorsResponse {
-  repeated HandSensor hand_sensors = 1;
-}
-
-message GetHandSensorRequest {
-  string id = 1;
-}
-
-message GetHandSensorResponse {
-  HandSensor hand_sensor = 1;
-}
-
-message CreateHandSensorRequest {
-  HandSensor hand_sensor = 1;
-}
-
-message CreateHandSensorResponse {
-  HandSensor hand_sensor = 1;
-}
-
-message UpdateHandSensorRequest {
-  HandSensor hand_sensor = 1;
-}
-
-message UpdateHandSensorResponse {
-  HandSensor hand_sensor = 1;
-}
-
-message DeleteHandSensorRequest {
-  string id = 1;
-}
-
-message DeleteHandSensorResponse {
-  bool success = 1;
-}
-
-message SetHandSensorDataRequest {
-  string id = 1;
-  HandSensorData data = 2;
-}
-
-message SetHandSensorDataResponse {
-  bool success = 1;
-}
-
-message HandSensor {
-  string id = 1;
-  string name = 2;
-  Side side = 3;
-  string description = 4;
-}
-
-message HandSensorData {
-  string id = 1;
-  uint32 timestamp = 2;
-  uint32 num_sequence = 3;
-  repeated double data = 4;
-}
-
-// WristSensor related messages
-message ListWristSensorsRequest {}
-
-message ListWristSensorsResponse {
-  repeated WristSensor wrist_sensors = 1;
-}
-
-message GetWristSensorRequest {
-  string id = 1;
-}
-
-message GetWristSensorResponse {
-  WristSensor wrist_sensor = 1;
-}
-
-message CreateWristSensorRequest {
-  WristSensor wrist_sensor = 1;
-}
-
-message CreateWristSensorResponse {
-  WristSensor wrist_sensor = 1;
-}
-
-message UpdateWristSensorRequest {
-  WristSensor wrist_sensor = 1;
-}
-
-message UpdateWristSensorResponse {
-  WristSensor wrist_sensor = 1;
-}
-
-message DeleteWristSensorRequest {
-  string id = 1;
-}
-
-message DeleteWristSensorResponse {
-  bool success = 1;
-}
-
-message WristSensor {
-  string id = 1;
-  string name = 2;
-  Side side = 3;
-  string description = 4;
-}
-
-message WristSensorData {
-  string id = 1;
-  uint32 timestamp = 2;
-  uint32 num_sequence = 3;
-  repeated double data = 4;
-}
-
-message SetWristSensorDataRequest {
-  string id = 1;
-  WristSensorData data = 2;
-}
-
-message SetWristSensorDataResponse {
-  bool success = 1;
 }
 
 message GloveData {

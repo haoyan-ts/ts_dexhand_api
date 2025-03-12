@@ -3,6 +3,7 @@ syntax = "proto3";
 package ts.dexhand.v1;
 
 import "ts/dexhand/v1/teleoperation_service.proto";
+import "ts/dexhand/v1/common.proto";
 
 option csharp_namespace = "TeleoperationServiceGrpc";
 
@@ -37,6 +38,8 @@ service ArmService {
   rpc UpdateLerpModel(UpdateLerpModelRequest) returns (UpdateLerpModelResponse) {}
   rpc DeleteLerpModel(DeleteLerpModelRequest) returns (DeleteLerpModelResponse) {}
 }
+
+
 
 // Move joint request
 message MoveJointRequest {
@@ -113,6 +116,7 @@ message DisableArmRequest {
 
 message ConnectArmRequest {
   Arm arm = 1;
+  PortConfig port_config = 2;
 }
 
 message DisconnectArmRequest {
@@ -141,16 +145,12 @@ message GetJointResponse {
   JointAngleData joint_angles = 1;
 }
 
-message PoseData {
-  repeated double data = 1;
-}
-
 message GetPoseRequest {
   Arm arm = 1;
 }
 
 message GetPoseResponse {
-  PoseData poses = 1;
+  repeated double poses = 1;
 }
 
 // Response messages for operations that previously returned Empty
