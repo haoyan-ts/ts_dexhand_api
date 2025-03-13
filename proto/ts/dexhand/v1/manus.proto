@@ -14,6 +14,7 @@ service ManusService {
   rpc UpdateGlove(UpdateGloveRequest) returns (UpdateGloveResponse) {}
   rpc DeleteGlove(DeleteGloveRequest) returns (DeleteGloveResponse) {}
 
+  rpc ListTrackers(ListTrackersRequest) returns (ListTrackersResponse) {}
   rpc GetTracker(GetTrackerRequest) returns (GetTrackerResponse) {}
   rpc CreateTracker(CreateTrackerRequest) returns (CreateTrackerResponse) {}
   rpc UpdateTracker(UpdateTrackerRequest) returns (UpdateTrackerResponse) {}
