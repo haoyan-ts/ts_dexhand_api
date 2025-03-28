@@ -68,6 +68,7 @@ message Arm {
   ArmType type = 4;
   Side side = 5;
   HardwareMetadata hardware_metadata = 6;
+  PortConfig port_config = 7;
 }
 
 message HardwareMetadata {
@@ -122,4 +123,5 @@ message Hand {
   HandType type = 4;
   Side side = 5;
   HardwareMetadata hardware_metadata = 6;
+  PortConfig port_config = 7;
 }
