@@ -121,7 +121,7 @@ message ListGlovesResponse {
 }
 
 message GetGloveRequest {
-  string id = 1;
+  Glove glove = 1;
 }
 
 message GetGloveResponse {
@@ -145,7 +145,7 @@ message UpdateGloveResponse {
 }
 
 message DeleteGloveRequest {
-  string id = 1;
+  Glove glove = 1;
 }
 
 message DeleteGloveResponse {
@@ -153,14 +153,13 @@ message DeleteGloveResponse {
 }
 
 message ErgonomicsData {
-  string id = 1;
   uint32 timestamp = 2;
 
   repeated double data = 3;
 }
 
 message SetGloveDataRequest {
-  string id = 1;
+  Glove glove = 1;
   ErgonomicsData ergonomics_data = 2;
 }
 
@@ -169,11 +168,11 @@ message SetGloveDataResponse {
 }
 
 message GetGloveDataRequest {
-  string id = 1;
+  Glove glove = 1;
 }
 
 message GetGloveDataResponse {
-  string id = 1;
+  Glove glove = 1;
   ErgonomicsData ergonomics_data = 2;
 }
 
@@ -210,7 +209,7 @@ message ListTrackersResponse {
 }
 
 message GetTrackerRequest {
-  string id = 1;
+  Tracker tracker = 1;
 }
 
 message GetTrackerResponse {
@@ -234,7 +233,7 @@ message UpdateTrackerResponse {
 }
 
 message DeleteTrackerRequest {
-  string id = 1;
+  Tracker tracker = 1;
 }
 
 message DeleteTrackerResponse {
@@ -242,7 +241,6 @@ message DeleteTrackerResponse {
 }
 
 message TrackerData {
-  string id = 1;
   uint32 timestamp = 2;
 
   // x, y, z, qx, qy, qz, qw
@@ -250,7 +248,7 @@ message TrackerData {
 }
 
 message SetTrackerDataRequest {
-  string id = 1;
+  Tracker tracker = 1;
   TrackerData data = 2;
 }
 
@@ -259,17 +257,16 @@ message SetTrackerDataResponse {
 }
 
 message GetTrackerDataRequest {
-  string id = 1;
+  Tracker tracker = 1;
 }
 
 message GetTrackerDataResponse {
-  TrackerData data = 1;
+  Tracker tracker = 1;
+  TrackerData data = 2;
 }
 
 message GloveData {
-  string id = 1;
   uint32 timestamp = 2;
-  uint32 num_sequence = 3;
 
   repeated double data = 4;
 }
