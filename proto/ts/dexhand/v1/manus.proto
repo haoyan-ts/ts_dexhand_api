@@ -25,12 +25,13 @@ service ManusService {
   rpc SetTrackerData(SetTrackerDataRequest) returns (SetTrackerDataResponse) {}
   rpc GetTrackerData(GetTrackerDataRequest) returns (GetTrackerDataResponse) {}
 
+  rpc SetCombinedSensorData(SetCombinedSensorDataRequest) returns (SetCombinedSensorDataResponse) {}
+
   // World operations
   rpc CreateFrameTransformation(CreateFrameTransformationRequest) returns (CreateFrameTransformationResponse) {}
   rpc UpdateFrameTransformation(UpdateFrameTransformationRequest) returns (UpdateFrameTransformationResponse) {}
   rpc DeleteFrameTransformation(DeleteFrameTransformationRequest) returns (DeleteFrameTransformationResponse) {}
   rpc GetFrameTransformation(GetFrameTransformationRequest) returns (GetFrameTransformationResponse) {}
-
 }
 
 // World related messages
@@ -152,15 +153,9 @@ message DeleteGloveResponse {
   bool success = 1;
 }
 
-message ErgonomicsData {
-  uint32 timestamp = 2;
-
-  repeated double data = 3;
-}
-
 message SetGloveDataRequest {
-  Glove glove = 1;
-  ErgonomicsData ergonomics_data = 2;
+  uint32 timestamp = 1;
+  GloveInfo glove_info = 2;
 }
 
 message SetGloveDataResponse {
@@ -172,8 +167,8 @@ message GetGloveDataRequest {
 }
 
 message GetGloveDataResponse {
-  Glove glove = 1;
-  ErgonomicsData ergonomics_data = 2;
+  uint32 timestamp = 1;
+  GloveInfo glove_info = 2;
 }
 
 // Tracker related messages
@@ -240,16 +235,9 @@ message DeleteTrackerResponse {
   bool success = 1;
 }
 
-message TrackerData {
-  uint32 timestamp = 2;
-
-  // x, y, z, qx, qy, qz, qw
-  repeated double pose = 4;
-}
-
 message SetTrackerDataRequest {
-  Tracker tracker = 1;
-  TrackerData data = 2;
+  uint32 timestamp = 1;
+  TrackerInfo tracker_info = 2;
 }
 
 message SetTrackerDataResponse {
@@ -261,12 +249,38 @@ message GetTrackerDataRequest {
 }
 
 message GetTrackerDataResponse {
-  Tracker tracker = 1;
-  TrackerData data = 2;
+  uint32 timestamp = 1;
+  TrackerInfo tracker_info = 2;
 }
 
 message GloveData {
-  uint32 timestamp = 2;
+  uint32 timestamp = 1;
+  repeated double data = 2;
+}
 
-  repeated double data = 4;
+// Tracker information and data
+message TrackerInfo {
+  Tracker tracker = 1;
+  repeated double data = 2;
+}
+
+// Glove information and data
+message GloveInfo {
+  Glove glove = 1;
+  repeated double data = 2;
+}
+
+// Represents a synchronized set of sensor data from both tracker and glove
+message CombinedSensorData {
+  TrackerInfo tracker_info = 1;
+  GloveInfo glove_info = 2;
+}
+
+message SetCombinedSensorDataRequest {
+  uint32 timestamp = 1;
+  CombinedSensorData sensor_data = 2;
+}
+
+message SetCombinedSensorDataResponse {
+  bool success = 1;
 }
