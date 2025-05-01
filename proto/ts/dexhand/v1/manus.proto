@@ -27,6 +27,8 @@ service ManusService {
 
   rpc SetCombinedSensorData(SetCombinedSensorDataRequest) returns (SetCombinedSensorDataResponse) {}
 
+  rpc SetCombinedSensorDataStream(stream SetCombinedSensorDataStreamRequest) returns (SetCombinedSensorDataStreamResponse) {}
+
   // World operations
   rpc CreateFrameTransformation(CreateFrameTransformationRequest) returns (CreateFrameTransformationResponse) {}
   rpc UpdateFrameTransformation(UpdateFrameTransformationRequest) returns (UpdateFrameTransformationResponse) {}
@@ -282,5 +284,14 @@ message SetCombinedSensorDataRequest {
 }
 
 message SetCombinedSensorDataResponse {
+  bool success = 1;
+}
+
+message SetCombinedSensorDataStreamRequest {
+  uint32 timestamp = 1;
+  CombinedSensorData sensor_data = 2;
+}
+
+message SetCombinedSensorDataStreamResponse {
   bool success = 1;
 }
